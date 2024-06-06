@@ -27,7 +27,7 @@
                     <td>{{ $project->id }}</td>
                     <td>{{ $project->name }}</td>
                     <td>{{ $project->client_name }}</td>
-                    <td>{{ $project->created_at }}</td>
+                    <td>{{ $project->created_at->format('Y/m/d h:i:s a') }}</td>
 
                     {{-- actions  --}}
                     <td>

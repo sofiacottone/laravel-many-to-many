@@ -27,17 +27,14 @@
             <span class="fw-bold">Technologies: </span>
             @if (count($project->technologies) > 0)
                 @foreach ($project->technologies as $technology)
-                    <span>{{ $technology->name }}@if (!$loop->last)
-                            -
-                        @endif
-                    </span>
+                    <span class="badge js-tech-badge">{{ $technology->name }}</span>
                 @endforeach
             @else
                 <span>None</span>
             @endif
         </div>
-        <div><span class="fw-bold">Created: </span>{{ $project->created_at }}</div>
-        <div><span class="fw-bold">Updated: </span>{{ $project->updated_at }}</div>
+        <div><span class="fw-bold">Created: </span>{{ $project->created_at->format('Y/m/d h:i:s a') }}</div>
+        <div><span class="fw-bold">Updated: </span>{{ $project->updated_at->format('Y/m/d h:i:s a') }}</div>
         @if ($project->cover_image)
             <div class="w-50 mt-3">
                 <img src="{{ asset('storage/' . $project->cover_image) }}" class="img-fluid" alt="{{ $project->name }}">
