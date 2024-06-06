@@ -102,7 +102,7 @@ class ProjectController extends Controller
         $types = Type::all();
         $technologies = Technology::all();
 
-        return view('admin.projects.edit', compact('project', 'types'));
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -126,7 +126,8 @@ class ProjectController extends Controller
                 'client_name' => 'nullable|max:95',
                 'summary' => 'nullable|min:5',
                 'cover_image' => 'nullable|image|max:512',
-                'type_id' => 'nullable|exists:types,id'
+                'type_id' => 'nullable|exists:types,id',
+                'technologies' => 'nullable|exists:technologies,id'
             ]
         );
 
@@ -147,6 +148,13 @@ class ProjectController extends Controller
 
         $project->slug = Str::slug($formData['name'], '-');
         $project->update($formData);
+
+        // edit relationship
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($formData['technologies']);
+        } else {
+            $project->technologies()->detach();
+        }
 
         return redirect()->route('admin.projects.show', compact('project'));
     }
