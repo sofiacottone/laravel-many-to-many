@@ -27,9 +27,8 @@
             <span class="fw-bold">Technologies: </span>
             @if (count($project->technologies) > 0)
                 @foreach ($project->technologies as $technology)
-                    <span>{{ $technology->name }}
-                        @if (!$loop->last)
-                            ,
+                    <span>{{ $technology->name }}@if (!$loop->last)
+                            -
                         @endif
                     </span>
                 @endforeach
