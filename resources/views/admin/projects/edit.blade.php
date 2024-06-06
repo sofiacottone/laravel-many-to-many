@@ -26,7 +26,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="client-name" class="form-label">Client name</label>
+            <label for="type-id" class="form-label">Type</label>
             <select class="form-select" id="type-id" name="type_id" aria-label="Project type select">
                 <option value="">Select project type</option>
                 @foreach ($types as $type)
@@ -34,6 +34,30 @@
                 @endforeach
             </select>
             @error('type_id')
+                <div class="text-danger ps-2">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <div>Technologies</div>
+
+            @foreach ($technologies as $technology)
+                <div class="form-check mt-1">
+                    @if ($errors->any())
+                        <input @checked(in_array($technology->id, old('technologies', []))) class="form-check-input" type="checkbox"
+                            value="{{ $technology->id }}" id="technology-{{ $technology->id }}" name="technologies[]">
+                    @else
+                        <input @checked($project->technologies->contains($technology)) class="form-check-input" type="checkbox"
+                            value="{{ $technology->id }}" id="technology-{{ $technology->id }}" name="technologies[]">
+                    @endif
+
+                    <label class="form-check-label" for="technology-{{ $technology->id }}">
+                        {{ $technology->name }}
+                    </label>
+                </div>
+            @endforeach
+
+            @error('technologies')
                 <div class="text-danger ps-2">{{ $message }}</div>
             @enderror
         </div>
