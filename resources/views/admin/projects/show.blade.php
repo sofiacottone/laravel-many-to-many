@@ -23,6 +23,20 @@
         <div><span class="fw-bold">Slug: </span>{{ $project->slug }}</div>
         <div><span class="fw-bold">Client: </span>{{ $project->client_name }}</div>
         <div><span class="fw-bold">Type: </span>{{ $project->type ? $project->type->name : 'No type selected.' }}</div>
+        <div>
+            <span class="fw-bold">Technologies: </span>
+            @if (count($project->technologies) > 0)
+                @foreach ($project->technologies as $technology)
+                    <span>{{ $technology->name }}
+                        @if (!$loop->last)
+                            ,
+                        @endif
+                    </span>
+                @endforeach
+            @else
+                <span>None</span>
+            @endif
+        </div>
         <div><span class="fw-bold">Created: </span>{{ $project->created_at }}</div>
         <div><span class="fw-bold">Updated: </span>{{ $project->updated_at }}</div>
         @if ($project->cover_image)
