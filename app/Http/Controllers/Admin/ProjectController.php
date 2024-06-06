@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -32,8 +33,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -50,7 +52,8 @@ class ProjectController extends Controller
                 'client_name' => 'nullable|max:95',
                 'summary' => 'nullable|min:5',
                 'cover_image' => 'nullable|image|max:512',
-                'type_id' => 'nullable|exists:types,id'
+                'type_id' => 'nullable|exists:types,id',
+                'technologies' => 'nullable|exists:technologies,id'
             ]
         );
 
@@ -68,6 +71,11 @@ class ProjectController extends Controller
         $newProject->fill($formData);
         $newProject->slug = Str::slug($newProject->name, '-');
         $newProject->save();
+
+        // add relationship
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($formData['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', ['project' => $newProject->slug]);
     }
@@ -92,6 +100,7 @@ class ProjectController extends Controller
     public function edit(Request $request, Project $project)
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
         return view('admin.projects.edit', compact('project', 'types'));
     }
