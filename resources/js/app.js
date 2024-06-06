@@ -56,3 +56,32 @@ allDeleteButtons.forEach((deleteButton) => {
         });
     });
 });
+
+
+// TECHNOLOGY BADGE
+// css -> blue
+// js -> yellow
+// vue -> green
+// sql -> gray
+// php -> black
+// laravel -> red
+
+// get badge
+const allTechBadges = document.querySelectorAll('.js-tech-badge');
+
+// change badge color in relation to technology name
+allTechBadges.forEach((techBadge) => {
+    if (techBadge.innerHTML == 'css') {
+        techBadge.classList.add('text-bg-primary');
+    } else if (techBadge.innerHTML == 'js') {
+        techBadge.classList.add('text-bg-warning');
+    } else if (techBadge.innerHTML == 'vue') {
+        techBadge.classList.add('text-bg-success');
+    } else if (techBadge.innerHTML == 'sql') {
+        techBadge.classList.add('text-bg-secondary');
+    } else if (techBadge.innerHTML == 'php') {
+        techBadge.classList.add('text-bg-dark');
+    } else if (techBadge.innerHTML == 'laravel') {
+        techBadge.classList.add('text-bg-danger');
+    }
+});
